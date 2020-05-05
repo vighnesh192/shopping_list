@@ -6,7 +6,8 @@ class AddItem extends Component {
         const {_id, name, date} = this.props.item;
         return (
             <React.Fragment>
-                <Button className="btn-danger" 
+                <Button onClick={this.props.removeItem.bind(this, _id)}
+                        className="btn-danger" 
                         size="md" 
                         style={{marginRight: '1.5rem'}}
                         >

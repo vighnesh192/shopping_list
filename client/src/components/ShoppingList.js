@@ -9,11 +9,23 @@ class ShoppingList extends Component {
         items: [] 
     }
 
+    //GET ITEMS
     componentDidMount() {
         axios.get('/api/items')
             .then(res => this.setState({items: res.data}))
             .catch(err => console.log(err))
     }
+
+    //DELETE ITEM
+    removeItem = (_id) => (
+        axios.delete(`/api/items/${_id}`)
+            .then(this.setState((state) => 
+                ({items: [...state.items.filter(item =>
+                         item._id !== _id)]
+                        })))
+            .catch(err => console.log(err))
+    )
+
     render() {
         const { items } = this.state;
         const { _id, name } = items;
@@ -29,7 +41,7 @@ class ShoppingList extends Component {
                                 >
                                 <ListGroupItem>
                                 
-                                    <AddItem item={item} />
+                                    <AddItem item={item} removeItem={this.removeItem}/>
                                 
                                 </ListGroupItem>
                             </CSSTransition>
